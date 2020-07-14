@@ -39,7 +39,7 @@ app.layout =dbc.Container([
     dbc.Row([
         dbc.Col([
             html.Div(id="download")
-        ])
+        ],width={"size": 6, "offset": 3})
     ])
 ], fluid=True)
 
