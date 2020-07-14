@@ -12,10 +12,9 @@ from flask import Flask, send_from_directory, send_file
 import flask
 
 from reviewCrawler import Scraper
-from layouts import search_card
+from layouts import search_card,get_table
 app = dash.Dash(__name__,
                 external_stylesheets=[dbc.themes.MATERIA],
-                server=flask.Flask('app'),
                 suppress_callback_exceptions=True)
 
 server = app.server
@@ -40,12 +39,20 @@ app.layout =dbc.Container([
         dbc.Col([
             html.Div(id="download")
         ],width={"size": 6, "offset": 3})
+    ]),
+    dbc.Row([
+        dbc.Col([
+            html.Br(),
+            html.Br(),
+            html.Div(id="data_table")
+        ],width={"size": 6, "offset": 3})
     ])
 ], fluid=True)
 
 
 @app.callback(
-    Output("download","children"),
+    [Output("download","children"),
+    Output("data_table","children")],
     [Input("submit","n_clicks")], 
     [State("link_input","value")]
 )
@@ -56,21 +63,27 @@ def get_data(n_clicks,link):
         X=Scraper(link)
         print(X.status)
         if X.feed_sect:
-            pd.DataFrame(X.rev_list).to_csv(f"output/{X.sku}.csv",index=False)
+            df=pd.DataFrame(X.rev_list)
+            df["Date"]=pd.to_datetime(df.Date,format="%d-%m-%Y")
+            df.to_csv(f"output/{X.sku}.csv",index=False)
             return [
                     html.Br(),
                     html.A(
                         dbc.Button("Download the csv file", color="primary", className="mr-1",id="download_csv"),
                         href=f"/dash/{X.sku}.csv"
-                )
-            ]
+                    )
+                ],[
+                html.H3(
+                    children="Review data"
+                ),
+                get_table(df)]
         else:
             return [
                 html.Br(),
                 html.P(
                     "That product has no reviews at the moment."
                 )
-            ]
+            ],[html.Br()]
 
 @app.server.route('/dash/<filename>') 
 def download_csv(filename):
