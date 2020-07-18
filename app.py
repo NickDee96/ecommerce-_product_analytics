@@ -7,7 +7,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 import pandas as pd
 
-from urllib.parse import quote as urlquote
+import re
 from flask import Flask, send_from_directory, send_file
 import flask
 
@@ -44,8 +44,34 @@ app.layout =dbc.Container([
         dbc.Col([
             html.Br(),
             html.Br(),
-            html.Div(id="data_table")
+            dbc.Spinner(html.Div(id="data_table"))
         ],width={"size": 6, "offset": 3})
+    ]),
+    dbc.Row([
+        dbc.Col([
+
+        ]),
+        dbc.Col([
+
+        ]),
+        dbc.Col([
+
+        ])
+    ]),
+    dbc.Row([
+        dbc.Col([
+            html.Div([
+                html.H2(
+                    children="Jumia Rankings vs Review Sentiment Ranking"
+                ),
+                html.Br(),
+                html.Div(id="j_vs_sr")
+            ])
+        ])
+    ]),
+    dbc.Row([
+        
+
     ])
 ], fluid=True)
 
@@ -62,19 +88,20 @@ def get_data(n_clicks,link):
         print(link)
         X=Scraper(link)
         print(X.status)
+        filename=re.sub(r'[^\w\s]','',X.prod_name)
         if X.feed_sect:
             df=pd.DataFrame(X.rev_list)
-            df["Date"]=pd.to_datetime(df.Date,format="%d-%m-%Y")
-            df.to_csv(f"output/{X.sku}.csv",index=False)
+            df["Date"]=pd.to_datetime(df.Date,format="%d-%m-%Y").dt.date
+            df.to_csv(f"output/{filename}.csv",index=False)
             return [
                     html.Br(),
                     html.A(
                         dbc.Button("Download the csv file", color="primary", className="mr-1",id="download_csv"),
-                        href=f"/dash/{X.sku}.csv"
+                        href=f"/dash/{filename}.csv"
                     )
                 ],[
                 html.H3(
-                    children="Review data"
+                    children=f"Review data for {X.prod_name}"
                 ),
                 get_table(df)]
         else:

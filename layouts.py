@@ -21,7 +21,7 @@ search_card=dbc.Row([
                     id = "link_input"
                 ),
                 html.Br(),
-                dbc.Button("Submit", color="primary", className="mr-1",id="submit")                
+                dbc.Button("Submit", color="primary", className="mr-1",id="submit"),         
             ])
         ])
     ],width={"size": 6, "offset": 3})
@@ -37,7 +37,9 @@ def get_table(df):
                     'overflow': 'hidden',
                     'textOverflow': 'ellipsis',
                     'maxWidth': 0,
-                    'textAlign': 'left'
+                    'textAlign': 'left',
+                    'fontSize':15,
+                    'font-family':'roboto'
                 },
                 style_as_list_view=True,
                 style_header={
@@ -47,4 +49,5 @@ def get_table(df):
                 sort_action='native',
                 page_size=10
             )
+
 

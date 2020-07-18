@@ -7,6 +7,7 @@ class Scraper:
         self.link=link
         self.connect()
         self.parse_page()
+        self.get_product_details()
         self.get_feedback_section()
         self.get_ratings()
         self.get_reviews()
@@ -17,6 +18,8 @@ class Scraper:
     def parse_page(self):
         self.page=soup(self.res.content,"lxml")
 
+    def get_product_details(self):
+        self.prod_name=self.page.find("h1").text.strip()
 
     def get_feedback_section(self):
         for x in self.page.find_all("section"):
