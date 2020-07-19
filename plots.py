@@ -27,7 +27,6 @@ def get_wordcloud(df,star):
 
 
 def get_dailyplot(df):
-    df=pd.DataFrame(X.rev_list)
     df["Date"]=pd.to_datetime(df.Date,format="%d-%m-%Y")
     ddf=pd. DataFrame(df.Date.value_counts()).sort_index()
     ddf['MA5'] = ddf.Date.rolling(5).mean()
@@ -64,7 +63,6 @@ def get_dailyplot(df):
 
 
 def get_starplot(rd):
-    rd=X.rating_dict
     rdf=pd.DataFrame(data={
         "Stars":[list(a.keys())[0] for a in rd["stars"]],
         "Count":[list(a.values())[0] for a in rd["stars"]]

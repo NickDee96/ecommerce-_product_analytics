@@ -21,7 +21,9 @@ search_card=dbc.Row([
                     id = "link_input"
                 ),
                 html.Br(),
-                dbc.Button("Submit", color="primary", className="mr-1",id="submit"),         
+                dbc.Button("Submit", color="primary", className="mr-1",id="submit"),
+                html.Hr(),
+                html.Div(id="download")         
             ])
         ])
     ],width={"size": 6, "offset": 3})
@@ -49,5 +51,87 @@ def get_table(df):
                 sort_action='native',
                 page_size=10
             )
+
+
+def get_rating_row(X,sdf):
+    return [
+        dbc.Row([
+            dbc.Col([
+                html.H2(
+                    children="Jumia Rankings vs Review Sentiment Ranking"
+                )
+            ],width={"size": 6, "offset": 3})
+        ]),
+        html.Br(),
+        dbc.Row([
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H5(
+                            children=("Total Number of Ratings")
+                        ),
+                        html.H2(
+                            children=X.rating_dict['ratings'],
+                            style={
+                                "color":"black",
+                                "display":"inline-block"
+                            }                            
+                        ),
+                    ])
+                ])
+            ]),
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H5(
+                            children=("Jumia's average Star rating")
+                        ),
+                        html.H2(
+                            children=round(X.rating_dict['ave_rating'],2),
+                            style={
+                                "color":"black",
+                                "display":"inline-block"
+                            }                            
+                        ),
+                    ])
+                ])
+            ]),
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H5(
+                            children=("Total Number of reviews")
+                        ),
+                        html.H2(
+                            children=len(X.rev_list),
+                            style={
+                                "color":"black",
+                                "display":"inline-block"
+                            }                            
+                        ),
+                    ])
+                ])
+            ]),
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H5(
+                            children=("Calculated Average Review Sentiment")
+                        ),
+                        html.H2(
+                            children=round(sdf['Combined Sentiment'].mean()*100,2),
+                            style={
+                                "color":"black",
+                                "display":"inline-block"
+                            }                            
+                        ),
+                    ])
+                ])
+            ])
+        ])
+
+    ]   
+#def get_wc_plotcard(df,star):
+#    card=dbc.Card
 
 
