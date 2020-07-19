@@ -65,7 +65,7 @@ tensorflow-estimator==2.2.0
 termcolor==1.1.0
 tokenizers==0.8.1rc1
 http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
-torchvision==0.6.1+cpu
+torchvision==0.6.1
 tqdm==4.48.0
 transformers==3.0.2
 urllib3==1.25.9
