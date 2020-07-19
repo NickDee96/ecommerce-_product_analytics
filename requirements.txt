@@ -64,7 +64,7 @@ tensorboard-plugin-wit==1.7.0
 tensorflow-estimator==2.2.0
 termcolor==1.1.0
 tokenizers==0.8.1rc1
-torch==1.5.1+cpu
+http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
 torchvision==0.6.1+cpu
 tqdm==4.48.0
 transformers==3.0.2
