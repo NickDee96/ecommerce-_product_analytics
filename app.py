@@ -116,8 +116,6 @@ def get_data(n_clicks,link):
                     ),
                     dcc.Graph(figure=get_dailyplot(sx.sdf))
                 ]
-
-
         else:
             return [
                 html.Br(),
@@ -125,6 +123,8 @@ def get_data(n_clicks,link):
                     "That product has no reviews at the moment."
                 )
             ],[html.Br()],[html.Br()],[html.Br()]
+    else:
+        return None,None,None,None
 
 @app.server.route('/dash/<filename>') 
 def download_csv(filename):
