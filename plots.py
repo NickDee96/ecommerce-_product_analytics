@@ -18,9 +18,9 @@ def get_corrplot(corr):
 
 
 def get_wordcloud(df,star):
-    wordcloud = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(" ".join([x for x in df[df.Stars==star].Review]).lower())
+    wordcloud=WordCloud(max_font_size=50, max_words=100, background_color="white").generate(" ".join([x for x in df[df.Stars==star].Review]).lower())
     buf = io.BytesIO() # in-memory files
-    plt.savefig(buf, format = "png")
+    wordcloud.to_image().save(buf,format="png")
     data = base64.b64encode(buf.getbuffer()).decode("utf8") # encode to html elements
     plt.close()
     return "data:image/png;base64,{}".format(data)

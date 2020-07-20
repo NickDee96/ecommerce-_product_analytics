@@ -5,6 +5,8 @@ import dash_bootstrap_components as dbc
 
 from dash_table import DataTable
 
+from plots import get_corrplot,get_wordcloud
+
 search_card=dbc.Row([
     dbc.Col([
         html.Br(),
@@ -130,7 +132,74 @@ def get_rating_row(X,sdf):
             ])
         ])
 
-    ]   
+    ]
+
+def get_corr_row(corr):
+    return dbc.Row([
+        dbc.Col([
+            dcc.Graph(figure=get_corrplot(corr))
+        ]),
+        dbc.Col([
+            html.Div([
+                get_table(corr)
+            ])
+        ])
+    ])
+
+def get_wc_row(sdf):
+    return dbc.Row([
+        dbc.Col([
+            dbc.Card([
+                dbc.CardBody([
+                    html.H3("⭐⭐⭐⭐⭐ WordCloud"),
+                    html.Div([
+                        html.Img(src=get_wordcloud(sdf,5))
+                    ])
+                ])
+            ])
+
+        ]),
+        dbc.Col([
+            dbc.Card([
+                dbc.CardBody([
+                    html.H3("⭐⭐⭐⭐ WordCloud"),
+                    html.Div([
+                        html.Img(src=get_wordcloud(sdf,4))
+                    ])
+                ])
+            ])
+        ]),
+        dbc.Col([
+            dbc.Card([
+                dbc.CardBody([
+                    html.H3("⭐⭐⭐ WordCloud"),
+                    html.Div([
+                        html.Img(src=get_wordcloud(sdf,3))
+                    ])
+                ])
+            ])
+        ]),
+        dbc.Col([
+            dbc.Card([
+                dbc.CardBody([
+                    html.H3("⭐⭐ WordCloud"),
+                    html.Div([
+                        html.Img(src=get_wordcloud(sdf,2))
+                    ])
+                ])
+            ])
+        ]),
+        dbc.Col([
+            dbc.Card([
+                dbc.CardBody([
+                    html.H3("⭐ WordCloud"),
+                    html.Div([
+                        html.Img(src=get_wordcloud(sdf,2))
+                    ])
+                ])
+            ])
+        ])
+    ])   
 #def get_wc_plotcard(df,star):
 #    card=dbc.Card
 

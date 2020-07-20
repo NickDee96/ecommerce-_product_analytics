@@ -12,7 +12,7 @@ from flask import Flask, send_from_directory, send_file
 import flask
 
 from reviewCrawler import Scraper
-from layouts import search_card,get_table,get_rating_row
+from layouts import search_card,get_table,get_rating_row,get_corr_row,get_wc_row
 from nlp import Sentiment
 from plots import get_wordcloud,get_starplot,get_dailyplot,get_corrplot
 
@@ -65,7 +65,9 @@ app.layout =dbc.Container([
                     html.Div(id="review_timeseries")
                 ])
 
-            ])
+            ]),
+            html.Div(id="corr_row"),
+            html.Div(id="wc_row")
         ])
 
     )
@@ -77,7 +79,9 @@ app.layout =dbc.Container([
     [Output("download","children"),
     Output("data_table","children"),
     Output("rating_row","children"),
-    Output("review_timeseries","children"),],
+    Output("review_timeseries","children"),
+    Output("corr_row","children"),
+    Output("wc_row","children")],
     [Input("submit","n_clicks")], 
     [State("link_input","value")]
 )
@@ -115,16 +119,16 @@ def get_data(n_clicks,link):
                         "A time series plot of reviews over time"
                     ),
                     dcc.Graph(figure=get_dailyplot(sx.sdf))
-                ]
+                ],get_corr_row(sx.corrdf),get_wc_row(sx.sdf)
         else:
             return [
                 html.Br(),
                 html.P(
                     "That product has no reviews at the moment."
                 )
-            ],[html.Br()],[html.Br()],[html.Br()]
+            ],[html.Br()],[html.Br()],[html.Br()],None,None
     else:
-        return None,None,None,None
+        return None,None,None,None,None,None
 
 @app.server.route('/dash/<filename>') 
 def download_csv(filename):
@@ -136,4 +140,4 @@ def download_csv(filename):
                      as_attachment=True)
 
 if __name__ == "__main__":
-    app.run_server(port=5000)
+    app.run_server(debug=True)
