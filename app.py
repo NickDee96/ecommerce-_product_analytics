@@ -135,5 +135,5 @@ def download_csv(filename):
                      attachment_filename=value,
                      as_attachment=True)
 
-#if __name__ == "__main__":
-#    app.run_server(debug=True)
+if __name__ == "__main__":
+    app.run_server(port=5000)
