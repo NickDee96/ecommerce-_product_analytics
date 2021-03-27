@@ -3,12 +3,15 @@ import pandas as pd
 from reviewCrawler import Scraper
 from time import time
 
+global nlp
+nlp = pipeline(
+            "sentiment-analysis"
+        )
+
 class Sentiment:
     def __init__(self,X):
         self.sdf=pd.DataFrame(X.rev_list)
-        self.nlp_sent=pipeline(
-            "sentiment-analysis"
-        )
+        self.nlp_sent= nlp
         self.wrangler()
         self.get_meandf()
         self.get_corrdf()   

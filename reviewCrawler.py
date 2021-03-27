@@ -58,7 +58,7 @@ class Scraper:
             for j in range(1,page_len+1):
                 pr_url=self.r_url+f"?page={j}"
                 r_page=soup(req.get(pr_url).content,"lxml")
-                containers=r_page.find_all("article")
+                containers=r_page.find_all("article",{"class","-pvs"})
                 for i in range(len(containers)):
                     p_stars=containers[i].find("div",{"class":"stars"}).text.split(" ")[0]
                     p_heading=containers[i].find("h3").text
