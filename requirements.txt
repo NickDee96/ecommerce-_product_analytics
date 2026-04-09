@@ -68,7 +68,7 @@ termcolor==1.1.0
 tokenizers==0.8.1rc1
 tqdm==4.48.0
 transformers==5.0.0rc3
-urllib3==1.26.5
+urllib3==2.6.3
 Werkzeug==3.1.6
 wordcloud==1.7.0
 wrapt==1.12.1
